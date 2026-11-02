@@ -246,17 +246,17 @@ public:
     // MuJoCo camera controls (for external mouse handling, e.g. ImGui).
     void RotateCamera(double dx, double dy, int w, int h) {
 #ifdef MJGAME_VIEWER
-        if (model_) mjv_moveCamera(model_, mjMOUSE_ROTATE_V, dx/w, dy/h, &scn_, &cam_);
+        if (model_) mjv_moveCamera(model_, mjMOUSE_ROTATE_V, dx/w, dy/h, &cam_);
 #endif
     }
     void TranslateCamera(double dx, double dy, int w, int h) {
 #ifdef MJGAME_VIEWER
-        if (model_) mjv_moveCamera(model_, mjMOUSE_MOVE_V, dx/w, dy/h, &scn_, &cam_);
+        if (model_) mjv_moveCamera(model_, mjMOUSE_MOVE_V, dx/w, dy/h, &cam_);
 #endif
     }
     void ZoomCamera(double dy) {
 #ifdef MJGAME_VIEWER
-        if (model_) mjv_moveCamera(model_, mjMOUSE_ZOOM, 0, -0.05*dy, &scn_, &cam_);
+        if (model_) mjv_moveCamera(model_, mjMOUSE_ZOOM, 0, -0.05*dy, &cam_);
 #endif
     }
 
@@ -355,13 +355,13 @@ inline void Sim::MouseMoveCB(GLFWwindow* w, double x, double y) {
 
     if (s->mouse_left_) {
         mjv_moveCamera(s->model_, mjMOUSE_ROTATE_V, dx / width, dy / height,
-                        &s->scn_, &s->cam_);
+                        &s->cam_);
     } else if (s->mouse_right_) {
         mjv_moveCamera(s->model_, mjMOUSE_MOVE_V, dx / width, dy / height,
-                        &s->scn_, &s->cam_);
+                        &s->cam_);
     } else if (s->mouse_mid_) {
         mjv_moveCamera(s->model_, mjMOUSE_ZOOM, 0, dy / height,
-                        &s->scn_, &s->cam_);
+                        &s->cam_);
     }
 }
 
@@ -369,7 +369,7 @@ inline void Sim::ScrollCB(GLFWwindow* w, double, double dy) {
     auto* s = static_cast<Sim*>(glfwGetWindowUserPointer(w));
     if (!s) return;
     mjv_moveCamera(s->model_, mjMOUSE_ZOOM, 0, -0.05 * dy,
-                    &s->scn_, &s->cam_);
+                    &s->cam_);
 }
 
 inline void Sim::KeyCB(GLFWwindow* w, int key, int, int act, int) {
